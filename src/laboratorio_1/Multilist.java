@@ -5,32 +5,27 @@
  */
 package laboratorio_1;
 
+import java.util.ArrayList;
 
 /**
  *
  * @author Estudiantes
  */
 public class Multilist {
-   
 
     class Nodo {
+
         int nro_registro;  //Registro
         Nodo link_nodo; //Para Moverse entre listas principales
-        Subnodo link_subnodo; //Para acceder a la sublista de la lista principal
+        ArrayList<String> campos = new ArrayList<>();//Campos
     }
 
-    class Subnodo {
-        String campo;
-        Subnodo link;//Moverse entre campos
-    }
-    
-    Subnodo Getcampos(Nodo ptr,Subnodo list, int reg){
+    ArrayList<String> Getcampos(Nodo ptr,ArrayList<String> list, int reg){
         Nodo p = ptr;
         while(p != null && p.nro_registro != reg){
             p = p.link_nodo;
         }
-        list = p.link_subnodo;
-        
+        list = p.campos;
         return list;
     }
 
@@ -59,17 +54,8 @@ public class Multilist {
         if (p == null) {
             return p;
         }
-        Subnodo q = p.link_subnodo;
-        Subnodo r = new Subnodo();
-        r.campo = campo;
-        if (q == null) {
-            p.link_subnodo = r;
-        }else{
-            while(q.link != null){
-                q = q.link;
-            }
-            q.link = r;
-        }
+        ArrayList<String> m = p.campos;
+        m.add(campo);
         return ptr;
     }
 

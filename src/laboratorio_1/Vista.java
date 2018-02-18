@@ -6,13 +6,13 @@
 package laboratorio_1;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import laboratorio_1.Multilist.Nodo;
-import laboratorio_1.Multilist.Subnodo;
 
 /**
  *
@@ -26,7 +26,10 @@ public class Vista extends javax.swing.JFrame {
     public static String[] abc = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     public static Nodo ptr;
     public static Multilist camps = new Multilist();
-    public static  Hashtable<String, Subnodo> directory;
+    public static Hashtable<String, ArrayList<String>> directory;
+    public static Vector<Integer> vec;
+    public static BigInteger n, m, k;
+
     public Vista() {
         ptr = null;
         initComponents();
@@ -55,6 +58,12 @@ public class Vista extends javax.swing.JFrame {
         Btn_llenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_llenarActionPerformed(evt);
+            }
+        });
+
+        Btn_sort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_sortActionPerformed(evt);
             }
         });
 
@@ -109,16 +118,16 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn_llenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_llenarActionPerformed
-        BigInteger n = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de registros N ")));
-        BigInteger m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
-        BigInteger k = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longuitud de los campos K ")));
+        n = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de registros N ")));
+        m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
+        k = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longuitud de los campos K ")));
         directory = new Hashtable<>();
         int sw;
         String key, cad;
-        Subnodo campos = null;
+        ArrayList<String> campos = null;
         for (int i = 0; i < n.intValue(); i++) {//Direccionar información
             ptr = camps.Agregarlista(ptr, i + 1);
-            sw=0;
+            sw = 0;
             for (int j = 0; j < m.intValue(); j++) {
                 switch (sw) {
                     case 0:
@@ -140,40 +149,83 @@ public class Vista extends javax.swing.JFrame {
             directory.put(key, campos);
         }
 
-        Enumeration<Subnodo> enumeration = directory.elements();
         Enumeration<String> llaves = directory.keys();
-        Vector<Integer> vec = new Vector<>();
-        String val;
-        Subnodo c;
+        ArrayList<String> c;
+        vec = new Vector<>();
         while (llaves.hasMoreElements()) {
-            val = llaves.nextElement();
-            c = enumeration.nextElement();
-            System.out.print("Llaves: " + val + " " + "Datos: ");
-            while (c != null) {
-                System.out.print(c.campo + "|");
-                c = c.link;
+            cad = llaves.nextElement();
+            c = directory.get(cad);
+            System.out.print("Llaves: " + cad + " " + "Datos: ");
+            for (int i = 0; i < c.size(); i++) {
+                System.out.print(c.get(i) + "|");
             }
             System.out.println("");
-            vec.add(Integer.parseInt(val));
+            vec.add(Integer.parseInt(cad));
         }
-        Collections.sort(vec);
-        System.out.println("_");
-        for (int i = 0; i < vec.size(); i++) {
-            val = vec.get(i).toString();
-            c = directory.get(val);
-            System.out.print("Llaves: " + val + " " + "Datos: ");
-            while (c != null) {
-                System.out.print(c.campo + "|");
-                c = c.link;
-            }
-            System.out.println("");
-        }
+
     }//GEN-LAST:event_Btn_llenarActionPerformed
 
     private void Btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_searchActionPerformed
-        
+        int seleccion = JOptionPane.showOptionDialog(null, "Buscar por : ",
+                "Select", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                new Object[]{"Llave", "Campo"}, "LLave");
+
+        if (seleccion == 0) {
+            String key = (JOptionPane.showInputDialog("Ingrese la llave: "));
+            if (directory.containsKey(key)) {
+                String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
+                ArrayList<String> r = directory.get(key);
+                if (r.contains(dat)) {
+                    JOptionPane.showMessageDialog(null, "El " + dat + " se encontro");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontro");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Llave incorrecta");
+            }
+        } else {
+            int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+            if (camp < m.intValue() && camp >= 0) {
+                String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
+                Enumeration<String> llaves = directory.keys();
+                String cad;
+                ArrayList<String> c;
+                boolean sw = true;
+                while (llaves.hasMoreElements() && sw == true) {
+                    cad = llaves.nextElement();
+                    c = directory.get(cad);
+                    if (c.get(camp).equals(dat)) {
+                        sw = false;
+                    }
+                }
+                if (!sw) {
+                    JOptionPane.showMessageDialog(null, "El " + dat + " se encontro");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontro");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Campo incorrecto");
+            }
+        }
 
     }//GEN-LAST:event_Btn_searchActionPerformed
+
+    private void Btn_sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sortActionPerformed
+        Collections.sort(vec);
+        ArrayList<String> r;
+        String val;
+        System.out.println("_");
+        for (int i = 0; i < vec.size(); i++) {
+            val = vec.get(i).toString();
+            r = directory.get(val);
+            System.out.print("Llaves: " + val + " " + "Datos: ");
+            for (int j = 0; j < r.size(); j++) {
+                System.out.print(r.get(j) + "|");
+            }
+            System.out.println("");
+        }
+    }//GEN-LAST:event_Btn_sortActionPerformed
 
     public static String RandomNum(BigInteger tam, BigInteger i, String numbers) {
         if (i.compareTo(tam) < 0) {
