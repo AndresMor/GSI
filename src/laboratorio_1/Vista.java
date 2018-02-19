@@ -12,7 +12,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.swing.JOptionPane;
-import laboratorio_1.Multilist.Nodo;
 
 /**
  *
@@ -23,15 +22,11 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form Vista
      */
-    public static String[] abc = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-    public static Nodo ptr;
-    public static Multilist camps = new Multilist();
     public static Hashtable<String, ArrayList<String>> directory;
     public static Vector<Integer> vec;
     public static BigInteger n, m, k;
 
     public Vista() {
-        ptr = null;
         initComponents();
     }
 
@@ -50,6 +45,9 @@ public class Vista extends javax.swing.JFrame {
         Btn_search = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        Btn_max_min = new javax.swing.JButton();
+        Btn_promedio = new javax.swing.JButton();
+        btn_moda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,22 +75,36 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel3.setText("Buscar:");
 
+        Btn_max_min.setText("Max / Min");
+
+        Btn_promedio.setText("Media");
+
+        btn_moda.setText("Moda");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Btn_sort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_moda, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Btn_sort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +123,12 @@ public class Vista extends javax.swing.JFrame {
                         .addGap(1, 1, 1)
                         .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,31 +141,28 @@ public class Vista extends javax.swing.JFrame {
         directory = new Hashtable<>();
         int sw;
         String key, cad;
-        ArrayList<String> campos = null;
-        for (int i = 0; i < n.intValue(); i++) {//Direccionar información
-            ptr = camps.Agregarlista(ptr, i + 1);
+        for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {//Direccionar información
+            ArrayList<String> campos = new ArrayList<>();
             sw = 0;
-            for (int j = 0; j < m.intValue(); j++) {
+            for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
                 switch (sw) {
                     case 0:
                         cad = RandomNum(k, BigInteger.ZERO, "");
-                        ptr = camps.Agregarcampo(ptr, i + 1, cad);
+                        campos.add(cad);
                         sw = 1;
                         break;
                     case 1:
-                        cad = RandomLetter(abc, k, BigInteger.ZERO, "");
-                        ptr = camps.Agregarcampo(ptr, i + 1, cad);
+                        cad = RandomLetter(k, BigInteger.ZERO, "");
+                        campos.add(cad);
                         sw = 0;
                         break;
                 }
             }
-            campos = camps.Getcampos(ptr, campos, i + 1);
             do {
                 key = RandomNum(BigInteger.valueOf(3), BigInteger.ZERO, "");
             } while (directory.containsKey(key)); //Verificar que la clave no se repita
             directory.put(key, campos);
         }
-
         Enumeration<String> llaves = directory.keys();
         ArrayList<String> c;
         vec = new Vector<>();
@@ -228,20 +242,19 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_sortActionPerformed
 
     public static String RandomNum(BigInteger tam, BigInteger i, String numbers) {
-        if (i.compareTo(tam) < 0) {
+        while (i.compareTo(tam) < 0) {
             String num = "" + ((int) (Math.random() * 9) + 1);
             numbers += num;
-            return RandomNum(tam, i.add(BigInteger.ONE), numbers);
+            i = i.add(BigInteger.ONE);
         }
         return numbers;
 
     }
 
-    public static String RandomLetter(String[] letras, BigInteger tam, BigInteger i, String letters) {
-        if (i.compareTo(tam) < 0) {
-            int num = (int) (Math.random() * 26);
-            letters += letras[num];
-            return RandomLetter(letras, tam, i.add(BigInteger.ONE), letters);
+    public static String RandomLetter(BigInteger tam, BigInteger i, String letters) {
+        while (i.compareTo(tam) < 0) {
+            letters += (char) (Math.random() * (91-65)+65);
+            i = i.add(BigInteger.ONE);
         }
         return letters;
     }
@@ -283,8 +296,11 @@ public class Vista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_llenar;
+    private javax.swing.JButton Btn_max_min;
+    private javax.swing.JButton Btn_promedio;
     private javax.swing.JButton Btn_search;
     private javax.swing.JButton Btn_sort;
+    private javax.swing.JButton btn_moda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
