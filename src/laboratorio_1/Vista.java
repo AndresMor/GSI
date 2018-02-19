@@ -5,12 +5,18 @@
  */
 package laboratorio_1;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +31,8 @@ public class Vista extends javax.swing.JFrame {
     public static Hashtable<String, ArrayList<String>> directory;
     public static Vector<Integer> vec;
     public static BigInteger n, m, k;
+    File archivo = new File("Archivo.txt");
+    BufferedWriter bw;
 
     public Vista() {
         initComponents();
@@ -140,41 +148,40 @@ public class Vista extends javax.swing.JFrame {
         k = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longuitud de los campos K ")));
         directory = new Hashtable<>();
         int sw;
-        String key, cad;
+        String key, cad, camps = "";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
         for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {//Direccionar información
             ArrayList<String> campos = new ArrayList<>();
             sw = 0;
-            for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
-                switch (sw) {
-                    case 0:
-                        cad = RandomNum(k, BigInteger.ZERO, "");
-                        campos.add(cad);
-                        sw = 1;
-                        break;
-                    case 1:
-                        cad = RandomLetter(k, BigInteger.ZERO, "");
-                        campos.add(cad);
-                        sw = 0;
-                        break;
+            camps = "";
+                for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
+                    switch (sw) {
+                        case 0:
+                            cad = RandomNum(k, BigInteger.ZERO, "");
+                            campos.add(cad);
+                            camps += cad + "|";
+                            sw = 1;
+                            break;
+                        case 1:
+                            cad = RandomLetter(k, BigInteger.ZERO, "");
+                            campos.add(cad);
+                            camps += cad + "|";
+                            sw = 0;
+                            break;
+                    }
                 }
-            }
-            do {
-                key = RandomNum(BigInteger.valueOf(3), BigInteger.ZERO, "");
-            } while (directory.containsKey(key)); //Verificar que la clave no se repita
-            directory.put(key, campos);
+
+                do {
+                    key = RandomNum(BigInteger.valueOf(5), BigInteger.ZERO, "");
+                } while (directory.containsKey(key)); //Verificar que la clave no se repita
+
+                bw.write("Llaves: " + key + " " + camps);
+                bw.newLine();
+                directory.put(key, campos);
+           
         }
-        Enumeration<String> llaves = directory.keys();
-        ArrayList<String> c;
-        vec = new Vector<>();
-        while (llaves.hasMoreElements()) {
-            cad = llaves.nextElement();
-            c = directory.get(cad);
-            System.out.print("Llaves: " + cad + " " + "Datos: ");
-            for (int i = 0; i < c.size(); i++) {
-                System.out.print(c.get(i) + "|");
-            }
-            System.out.println("");
-            vec.add(Integer.parseInt(cad));
+        } catch (IOException ex) {
+            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_Btn_llenarActionPerformed
@@ -253,7 +260,7 @@ public class Vista extends javax.swing.JFrame {
 
     public static String RandomLetter(BigInteger tam, BigInteger i, String letters) {
         while (i.compareTo(tam) < 0) {
-            letters += (char) (Math.random() * (91-65)+65);
+            letters += (char) (Math.random() * (91 - 65) + 65);
             i = i.add(BigInteger.ONE);
         }
         return letters;
