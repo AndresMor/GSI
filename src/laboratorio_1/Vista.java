@@ -18,6 +18,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,7 +33,6 @@ public class Vista extends javax.swing.JFrame {
     public static Vector<BigInteger> vec;
     public static BigInteger n, m, k;
     File archivo = new File("Archivo.txt");
-    BufferedWriter bw;
 
     public Vista() {
         initComponents();
@@ -56,6 +56,8 @@ public class Vista extends javax.swing.JFrame {
         Btn_max_min = new javax.swing.JButton();
         Btn_promedio = new javax.swing.JButton();
         btn_moda = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,6 +106,17 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
+        JTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setViewportView(JTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,46 +125,50 @@ public class Vista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_moda, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Btn_sort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                            .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63)
+                        .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                        .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_llenar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                    .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -159,46 +176,55 @@ public class Vista extends javax.swing.JFrame {
 
     private void Btn_llenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_llenarActionPerformed
         n = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de registros N ")));
-        do {
-            m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
-        } while (m.compareTo(BigInteger.ZERO) <= 0);
+        do {m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));} while (m.compareTo(BigInteger.ZERO) <= 0);
         k = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longuitud de los campos K ")));
         directory = new Hashtable<>();
-        int sw;
-        String key, cad, camps = "";
         vec = new Vector<>();
+        String[]rows = new String[m.intValue()+1];
+        int sw;
+        String key, cad, camps;
+        DefaultTableModel model = (DefaultTableModel) JTable.getModel();  
+        for (int i = 0; i < m.intValue()+1; i++) {
+             if (i==0) {
+                model.addColumn("Key");
+             }else{
+                model.addColumn("C."+i);
+            }
+        }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
-
-            for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {//Direccionar información
+            for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {
                 ArrayList<String> campos = new ArrayList<>();
-                sw = 0;
-                camps = "";
+                sw = 0;camps = "";
                 for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
                     switch (sw) {
                         case 0:
                             cad = RandomNum(k, BigInteger.ZERO, "");
                             campos.add(cad);
                             camps += cad + "|";
+                            rows[j.intValue()+1] = cad;
                             sw = 1;
                             break;
                         case 1:
                             cad = RandomLetter(k, BigInteger.ZERO, "");
                             campos.add(cad);
                             camps += cad + "|";
+                            rows[j.intValue()+1] = cad;
                             sw = 0;
                             break;
                     }
+                   
                 }
-
                 do {
                     key = RandomNum(k, BigInteger.ZERO, "");
                 } while (directory.containsKey(key)); //Verificar que la clave no se repita
+                rows[0] = key;
                 vec.add(BigInteger.valueOf(Long.parseLong(key)));
                 bw.write("Llaves: " + key + " " + camps);
                 bw.newLine();
-                directory.put(key, campos);
-
+                directory.put(key, campos);//Direccionar información
+                model.addRow(rows);
             }
+            JTable.setModel(model);
             System.out.println("¬Arhivo Cargado¬");
         } catch (IOException ex) {
             Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,7 +281,18 @@ public class Vista extends javax.swing.JFrame {
     private void Btn_sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sortActionPerformed
         Collections.sort(vec);
         ArrayList<String> r;
+        String[]rows = new String[m.intValue()+1];
         String val, camps;
+        DefaultTableModel model = (DefaultTableModel) JTable.getModel();  
+        model.setRowCount(0);
+        model.setColumnCount(0);
+        for (int i = 0; i < m.intValue()+1; i++) {
+             if (i==0) {
+                model.addColumn("Key");
+             }else{
+                model.addColumn("C."+i);
+            }
+        }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
             for (int i = 0; i < vec.size(); i++) {
                 val = vec.get(i).toString();
@@ -263,10 +300,14 @@ public class Vista extends javax.swing.JFrame {
                 camps = "";
                 for (int j = 0; j < r.size(); j++) {
                     camps += r.get(j) + "|";
+                    rows[j+1] = r.get(j);
                 }
+                rows[0] = val;
                 bw.write("Llaves: " + val + " " + camps);
                 bw.newLine();
+                model.addRow(rows);
             }
+            JTable.setModel(model);
             System.out.println("¬Arhivo Ordenado Cargado¬");
         } catch (IOException ex) {
             Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
@@ -333,16 +374,15 @@ public class Vista extends javax.swing.JFrame {
             String cad;
             ArrayList<String> c;
             ArrayList<BigInteger> r = new ArrayList<>();
-            BigInteger md = BigInteger.ZERO;
             int cont = 0, dis = 0;
-            String me = "";
+            String me = "0";
             while (llaves.hasMoreElements()) {
                 cad = llaves.nextElement();
                 c = directory.get(cad);
                 r.add(BigInteger.valueOf(Long.parseLong(c.get(camp))));
             }
-            Collections.sort(r);
-            for (int i = 0; i < r.size()-1; i++) {
+            Collections.sort(r);//Campos ordenados
+            for (int i = 0; i < r.size()-1; i++) {//Moda : Se compara la distancia de los datos consecutivos 
                 if (r.get(i).compareTo(r.get(i + 1)) == 0) {
                     cont++;
                     if (cont > dis) {
@@ -420,9 +460,11 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton Btn_promedio;
     private javax.swing.JButton Btn_search;
     private javax.swing.JButton Btn_sort;
+    private javax.swing.JTable JTable;
     private javax.swing.JButton btn_moda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
