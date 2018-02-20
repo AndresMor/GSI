@@ -29,7 +29,7 @@ public class Vista extends javax.swing.JFrame {
      * Creates new form Vista
      */
     public static Hashtable<String, ArrayList<String>> directory;
-    public static Vector<Integer> vec;
+    public static Vector<BigInteger> vec;
     public static BigInteger n, m, k;
     File archivo = new File("Archivo.txt");
     BufferedWriter bw;
@@ -84,10 +84,25 @@ public class Vista extends javax.swing.JFrame {
         jLabel3.setText("Buscar:");
 
         Btn_max_min.setText("Max / Min");
+        Btn_max_min.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_max_minActionPerformed(evt);
+            }
+        });
 
         Btn_promedio.setText("Media");
+        Btn_promedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_promedioActionPerformed(evt);
+            }
+        });
 
         btn_moda.setText("Moda");
+        btn_moda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,16 +159,20 @@ public class Vista extends javax.swing.JFrame {
 
     private void Btn_llenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_llenarActionPerformed
         n = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de registros N ")));
-        m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
+        do {
+            m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
+        } while (m.compareTo(BigInteger.ZERO) <= 0);
         k = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longuitud de los campos K ")));
         directory = new Hashtable<>();
         int sw;
         String key, cad, camps = "";
+        vec = new Vector<>();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
-        for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {//Direccionar información
-            ArrayList<String> campos = new ArrayList<>();
-            sw = 0;
-            camps = "";
+
+            for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {//Direccionar información
+                ArrayList<String> campos = new ArrayList<>();
+                sw = 0;
+                camps = "";
                 for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
                     switch (sw) {
                         case 0:
@@ -172,14 +191,15 @@ public class Vista extends javax.swing.JFrame {
                 }
 
                 do {
-                    key = RandomNum(BigInteger.valueOf(5), BigInteger.ZERO, "");
+                    key = RandomNum(k, BigInteger.ZERO, "");
                 } while (directory.containsKey(key)); //Verificar que la clave no se repita
-
+                vec.add(BigInteger.valueOf(Long.parseLong(key)));
                 bw.write("Llaves: " + key + " " + camps);
                 bw.newLine();
                 directory.put(key, campos);
-           
-        }
+
+            }
+            System.out.println("¬Arhivo Cargado¬");
         } catch (IOException ex) {
             Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -235,18 +255,111 @@ public class Vista extends javax.swing.JFrame {
     private void Btn_sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sortActionPerformed
         Collections.sort(vec);
         ArrayList<String> r;
-        String val;
-        System.out.println("_");
-        for (int i = 0; i < vec.size(); i++) {
-            val = vec.get(i).toString();
-            r = directory.get(val);
-            System.out.print("Llaves: " + val + " " + "Datos: ");
-            for (int j = 0; j < r.size(); j++) {
-                System.out.print(r.get(j) + "|");
+        String val, camps;
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
+            for (int i = 0; i < vec.size(); i++) {
+                val = vec.get(i).toString();
+                r = directory.get(val);
+                camps = "";
+                for (int j = 0; j < r.size(); j++) {
+                    camps += r.get(j) + "|";
+                }
+                bw.write("Llaves: " + val + " " + camps);
+                bw.newLine();
             }
-            System.out.println("");
+            System.out.println("¬Arhivo Ordenado Cargado¬");
+        } catch (IOException ex) {
+            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_Btn_sortActionPerformed
+
+    private void Btn_max_minActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_max_minActionPerformed
+        BigInteger max = BigInteger.ZERO, min = BigInteger.ZERO, data;
+        int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+        if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
+            Enumeration<String> llaves = directory.keys();
+            String cad;
+            ArrayList<String> c;
+            boolean sw = true;
+
+            while (llaves.hasMoreElements()) {
+                cad = llaves.nextElement();
+                c = directory.get(cad);
+                if (sw == true) {
+                    min = BigInteger.valueOf(Long.parseLong(c.get(camp)));
+                    max = BigInteger.valueOf(Long.parseLong(c.get(camp)));
+                    sw = false;
+                } else {
+                    data = BigInteger.valueOf(Long.parseLong(c.get(camp)));
+                    if (data.compareTo(max) > 0) {
+                        max = data;
+                    }
+                    if (data.compareTo(min) < 0) {
+                        min = data;
+                    }
+                }
+
+            }
+            JOptionPane.showMessageDialog(null, "El dato menor del campo " + (camp+1) + " es " + min);
+            JOptionPane.showMessageDialog(null, "El dato mayor del campo " + (camp+1) + " es " + max);
+        } else {
+            JOptionPane.showMessageDialog(null, "Campo incorrecto");
+        }
+    }//GEN-LAST:event_Btn_max_minActionPerformed
+
+    private void Btn_promedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_promedioActionPerformed
+        int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+        BigInteger sum = BigInteger.ZERO;
+        if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
+            Enumeration<String> llaves = directory.keys();
+            String cad;
+            ArrayList<String> c;
+            while (llaves.hasMoreElements()) {
+                cad = llaves.nextElement();
+                c = directory.get(cad);
+                sum = sum.add(BigInteger.valueOf(Long.parseLong(c.get(camp))));
+            }
+            JOptionPane.showMessageDialog(null, "El promedio de dato en el campo " + (camp+1) + " es " + sum.divide(n));
+        } else {
+            JOptionPane.showMessageDialog(null, "Campo incorrecto");
+        }
+    }//GEN-LAST:event_Btn_promedioActionPerformed
+
+    private void btn_modaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modaActionPerformed
+        int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+        if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
+            Enumeration<String> llaves = directory.keys();
+            String cad;
+            ArrayList<String> c;
+            ArrayList<BigInteger> r = new ArrayList<>();
+            BigInteger md = BigInteger.ZERO;
+            int cont = 0, dis = 0;
+            String me = "";
+            while (llaves.hasMoreElements()) {
+                cad = llaves.nextElement();
+                c = directory.get(cad);
+                r.add(BigInteger.valueOf(Long.parseLong(c.get(camp))));
+            }
+            Collections.sort(r);
+            for (int i = 0; i < r.size()-1; i++) {
+                if (r.get(i).compareTo(r.get(i + 1)) == 0) {
+                    cont++;
+                    if (cont > dis) {
+                        me = r.get(i) + "";
+                        dis = cont;
+                    }else if(cont==dis){
+                        me += ","+r.get(i);
+                    }
+                } else {
+                    cont = 0;
+                }
+            }
+            JOptionPane.showMessageDialog(null, "La moda en el campo " + (camp+1) + " es "+me);
+        } else {
+            JOptionPane.showMessageDialog(null, "Campo incorrecto");
+        }
+    }//GEN-LAST:event_btn_modaActionPerformed
 
     public static String RandomNum(BigInteger tam, BigInteger i, String numbers) {
         while (i.compareTo(tam) < 0) {

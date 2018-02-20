@@ -118,16 +118,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Max / Min"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btn_max_minActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Btn_promedio">
       <Properties>
         <Property name="text" type="java.lang.String" value="Media"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btn_promedioActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_moda">
       <Properties>
         <Property name="text" type="java.lang.String" value="Moda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_modaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
