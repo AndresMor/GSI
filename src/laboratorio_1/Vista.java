@@ -218,7 +218,7 @@ public class Vista extends javax.swing.JFrame {
                     key = RandomNum(k, BigInteger.ZERO, "");
                 } while (directory.containsKey(key)); //Verificar que la clave no se repita
                 rows[0] = key;
-                vec.add(BigInteger.valueOf(Long.parseLong(key)));
+                vec.add(new BigInteger(key));
                 bw.write("Llaves: " + key + " " + camps);
                 bw.newLine();
                 directory.put(key, campos);//Direccionar información
@@ -369,17 +369,17 @@ public class Vista extends javax.swing.JFrame {
 
     private void btn_modaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modaActionPerformed
         int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
-        if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
+        if (camp < m.intValue() && camp >= 0) {
             Enumeration<String> llaves = directory.keys();
             String cad;
             ArrayList<String> c;
-            ArrayList<BigInteger> r = new ArrayList<>();
+            ArrayList<String> r = new ArrayList<>();
             int cont = 0, dis = 0;
             String me = "0";
             while (llaves.hasMoreElements()) {
                 cad = llaves.nextElement();
                 c = directory.get(cad);
-                r.add(BigInteger.valueOf(Long.parseLong(c.get(camp))));
+                r.add(c.get(camp));
             }
             Collections.sort(r);//Campos ordenados
             for (int i = 0; i < r.size()-1; i++) {//Moda : Se compara la distancia de los datos consecutivos 
