@@ -58,6 +58,7 @@ public class Vista extends javax.swing.JFrame {
         btn_moda = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable = new javax.swing.JTable();
+        Txt_rp = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,37 +138,44 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(Btn_sort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(63, 63, 63)
-                        .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                        .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85))))
+                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                                .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Txt_rp))
+                        .addGap(58, 58, 58))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                    .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                        .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Txt_rp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -212,7 +220,6 @@ public class Vista extends javax.swing.JFrame {
                             sw = 0;
                             break;
                     }
-                   
                 }
                 do {
                     key = RandomNum(k, BigInteger.ZERO, "");
@@ -316,6 +323,7 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_sortActionPerformed
 
     private void Btn_max_minActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_max_minActionPerformed
+        Txt_rp.setText("");
         BigInteger max = BigInteger.ZERO, min = BigInteger.ZERO, data;
         int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
         if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
@@ -328,11 +336,11 @@ public class Vista extends javax.swing.JFrame {
                 cad = llaves.nextElement();
                 c = directory.get(cad);
                 if (sw == true) {
-                    min = BigInteger.valueOf(Long.parseLong(c.get(camp)));
-                    max = BigInteger.valueOf(Long.parseLong(c.get(camp)));
+                    min = new BigInteger(c.get(camp));
+                    max = min;
                     sw = false;
                 } else {
-                    data = BigInteger.valueOf(Long.parseLong(c.get(camp)));
+                    data = new BigInteger(c.get(camp));
                     if (data.compareTo(max) > 0) {
                         max = data;
                     }
@@ -342,14 +350,15 @@ public class Vista extends javax.swing.JFrame {
                 }
 
             }
-            JOptionPane.showMessageDialog(null, "El dato menor del campo " + (camp+1) + " es " + min);
-            JOptionPane.showMessageDialog(null, "El dato mayor del campo " + (camp+1) + " es " + max);
+            Txt_rp.setText("El dato mayor y menor del campo "+(camp+1)+" es: "+max+"/"+min);
+            
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
     }//GEN-LAST:event_Btn_max_minActionPerformed
 
     private void Btn_promedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_promedioActionPerformed
+        Txt_rp.setText("");
         int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
         BigInteger sum = BigInteger.ZERO;
         if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
@@ -359,15 +368,16 @@ public class Vista extends javax.swing.JFrame {
             while (llaves.hasMoreElements()) {
                 cad = llaves.nextElement();
                 c = directory.get(cad);
-                sum = sum.add(BigInteger.valueOf(Long.parseLong(c.get(camp))));
+                sum = sum.add(new BigInteger(c.get(camp)));
             }
-            JOptionPane.showMessageDialog(null, "El promedio de dato en el campo " + (camp+1) + " es " + sum.divide(n));
+            Txt_rp.setText("El promedio de datos del "+(camp+1)+" es: "+sum.divide(n));
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
     }//GEN-LAST:event_Btn_promedioActionPerformed
 
     private void btn_modaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modaActionPerformed
+        Txt_rp.setText("");
         int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
         if (camp < m.intValue() && camp >= 0) {
             Enumeration<String> llaves = directory.keys();
@@ -395,7 +405,7 @@ public class Vista extends javax.swing.JFrame {
                     cont = 0;
                 }
             }
-            JOptionPane.showMessageDialog(null, "La moda en el campo " + (camp+1) + " es "+me);
+            Txt_rp.setText("La moda en el campo " + (camp+1) + " es: "+me);
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
@@ -461,6 +471,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton Btn_search;
     private javax.swing.JButton Btn_sort;
     private javax.swing.JTable JTable;
+    private javax.swing.JTextField Txt_rp;
     private javax.swing.JButton btn_moda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
