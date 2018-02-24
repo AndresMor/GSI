@@ -7,6 +7,7 @@ package laboratorio_1;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -14,10 +15,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Scanner;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -47,6 +51,7 @@ public class Vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Fc = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
         Btn_llenar = new javax.swing.JButton();
         Btn_sort = new javax.swing.JButton();
@@ -59,6 +64,7 @@ public class Vista extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         JTable = new javax.swing.JTable();
         Txt_rp = new javax.swing.JTextField();
+        btn_archivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,6 +124,13 @@ public class Vista extends javax.swing.JFrame {
         JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(JTable);
 
+        btn_archivo.setText("Cargar Archivo");
+        btn_archivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_archivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,9 +138,7 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -142,12 +153,14 @@ public class Vista extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
+                                .addGap(47, 47, 47)
                                 .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                                .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Txt_rp))
-                        .addGap(58, 58, 58))))
+                                .addGap(44, 44, 44)
+                                .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                .addComponent(btn_archivo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Txt_rp))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +173,8 @@ public class Vista extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_archivo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -183,58 +197,69 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn_llenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_llenarActionPerformed
-        n = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de registros N ")));
-        do {m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));} while (m.compareTo(BigInteger.ZERO) <= 0);
-        k = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longuitud de los campos K ")));
-        directory = new Hashtable<>();
-        vec = new Vector<>();
-        String[]rows = new String[m.intValue()+1];
-        int sw;
-        String key, cad, camps;
-        DefaultTableModel model = (DefaultTableModel) JTable.getModel();  
-        for (int i = 0; i < m.intValue()+1; i++) {
-             if (i==0) {
-                model.addColumn("Key");
-             }else{
-                model.addColumn("C."+i);
-            }
-        }
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
-            for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {
-                ArrayList<String> campos = new ArrayList<>();
-                sw = 0;camps = "";
-                for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
-                    switch (sw) {
-                        case 0:
-                            cad = RandomNum(k, BigInteger.ZERO, "");
-                            campos.add(cad);
-                            camps += cad + "|";
-                            rows[j.intValue()+1] = cad;
-                            sw = 1;
-                            break;
-                        case 1:
-                            cad = RandomLetter(k, BigInteger.ZERO, "");
-                            campos.add(cad);
-                            camps += cad + "|";
-                            rows[j.intValue()+1] = cad;
-                            sw = 0;
-                            break;
-                    }
+        try {
+            n = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de registros N ")));
+            do {
+                m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
+            } while (m.compareTo(BigInteger.ZERO) <= 0);
+            directory = new Hashtable<>();
+            vec = new Vector<>();
+            String[] rows = new String[m.intValue() + 1];
+            int sw;
+            String key, cad, camps;
+            int[] random = new int[m.intValue()];
+            random = RandomPos(random);
+            DefaultTableModel model = (DefaultTableModel) JTable.getModel();
+            model.setRowCount(0);
+            model.setColumnCount(0);
+            for (int i = 0; i < m.intValue() + 1; i++) {
+                if (i == 0) {
+                    model.addColumn("Key");
+                } else {
+                    model.addColumn("C." + i);
                 }
-                do {
-                    key = RandomNum(k, BigInteger.ZERO, "");
-                } while (directory.containsKey(key)); //Verificar que la clave no se repita
-                rows[0] = key;
-                vec.add(new BigInteger(key));
-                bw.write("Llaves: " + key + " " + camps);
-                bw.newLine();
-                directory.put(key, campos);//Direccionar información
-                model.addRow(rows);
             }
-            JTable.setModel(model);
-            System.out.println("¬Arhivo Cargado¬");
-        } catch (IOException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
+                for (BigInteger i = BigInteger.ZERO; i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {
+                    ArrayList<String> campos = new ArrayList<>();
+                    sw = 0;
+                    camps = "";
+                    for (BigInteger j = BigInteger.ZERO; j.compareTo(m) < 0; j = j.add(BigInteger.ONE)) {
+                        switch (sw) {
+                            case 0:
+                                cad = RandomNum(BigInteger.valueOf(random[j.intValue()]), BigInteger.ZERO, "");
+                                campos.add(cad);
+                                camps += cad + ";";
+                                rows[j.intValue() + 1] = cad;
+                                sw = 1;
+                                break;
+                            case 1:
+                                cad = RandomLetter(BigInteger.valueOf(random[j.intValue()]), BigInteger.ZERO, "");
+                                campos.add(cad);
+                                camps += cad + ";";
+                                rows[j.intValue() + 1] = cad;
+                                sw = 0;
+                                break;
+                        }
+                    }
+                    do {
+                        key = RandomNum(BigInteger.valueOf(10), BigInteger.ZERO, "");
+                    } while (directory.containsKey(key)); //Verificar que la clave no se repita
+                    rows[0] = key;
+                    vec.add(new BigInteger(key));
+                    bw.write(key + ";" + camps);
+                    bw.newLine();
+                    directory.put(key, campos);//Direccionar información
+                    model.addRow(rows);
+                }
+                JTable.setModel(model);
+                System.out.println("¬Arhivo Cargado¬");
+            } catch (IOException ex) {
+                Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } catch (Exception e) {
+
         }
 
     }//GEN-LAST:event_Btn_llenarActionPerformed
@@ -288,16 +313,16 @@ public class Vista extends javax.swing.JFrame {
     private void Btn_sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sortActionPerformed
         Collections.sort(vec);
         ArrayList<String> r;
-        String[]rows = new String[m.intValue()+1];
+        String[] rows = new String[m.intValue() + 1];
         String val, camps;
-        DefaultTableModel model = (DefaultTableModel) JTable.getModel();  
+        DefaultTableModel model = (DefaultTableModel) JTable.getModel();
         model.setRowCount(0);
         model.setColumnCount(0);
-        for (int i = 0; i < m.intValue()+1; i++) {
-             if (i==0) {
+        for (int i = 0; i < m.intValue() + 1; i++) {
+            if (i == 0) {
                 model.addColumn("Key");
-             }else{
-                model.addColumn("C."+i);
+            } else {
+                model.addColumn("C." + i);
             }
         }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
@@ -307,7 +332,7 @@ public class Vista extends javax.swing.JFrame {
                 camps = "";
                 for (int j = 0; j < r.size(); j++) {
                     camps += r.get(j) + "|";
-                    rows[j+1] = r.get(j);
+                    rows[j + 1] = r.get(j);
                 }
                 rows[0] = val;
                 bw.write("Llaves: " + val + " " + camps);
@@ -350,8 +375,8 @@ public class Vista extends javax.swing.JFrame {
                 }
 
             }
-            Txt_rp.setText("El dato mayor y menor del campo "+(camp+1)+" es: "+max+"/"+min);
-            
+            Txt_rp.setText("El dato mayor y menor del campo " + (camp + 1) + " es: " + max + "/" + min);
+
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
@@ -370,7 +395,7 @@ public class Vista extends javax.swing.JFrame {
                 c = directory.get(cad);
                 sum = sum.add(new BigInteger(c.get(camp)));
             }
-            Txt_rp.setText("El promedio de datos del "+(camp+1)+" es: "+sum.divide(n));
+            Txt_rp.setText("El promedio de datos del " + (camp + 1) + " es: " + sum.divide(n));
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
@@ -392,24 +417,67 @@ public class Vista extends javax.swing.JFrame {
                 r.add(c.get(camp));
             }
             Collections.sort(r);//Campos ordenados
-            for (int i = 0; i < r.size()-1; i++) {//Moda : Se compara la distancia de los datos consecutivos 
+            for (int i = 0; i < r.size() - 1; i++) {//Moda : Se compara la distancia de los datos consecutivos 
                 if (r.get(i).compareTo(r.get(i + 1)) == 0) {
                     cont++;
                     if (cont > dis) {
                         me = r.get(i) + "";
                         dis = cont;
-                    }else if(cont==dis){
-                        me += ","+r.get(i);
+                    } else if (cont == dis) {
+                        me += "," + r.get(i);
                     }
                 } else {
                     cont = 0;
                 }
             }
-            Txt_rp.setText("La moda en el campo " + (camp+1) + " es: "+me);
+            Txt_rp.setText("La moda en el campo " + (camp + 1) + " es: " + me);
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
     }//GEN-LAST:event_btn_modaActionPerformed
+
+    private void btn_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_archivoActionPerformed
+        FileNameExtensionFilter filter
+                = new FileNameExtensionFilter("Archivos.txt", "txt", "texto");
+        Fc.setFileFilter(filter);
+        int Opcion = Fc.showOpenDialog(this); //Mostrar el FileChooser
+        if (Opcion == JFileChooser.APPROVE_OPTION) {//Si el usuario escogió abrir
+            archivo = Fc.getSelectedFile();
+            DefaultTableModel model = (DefaultTableModel) JTable.getModel();
+            model.setRowCount(0);
+            model.setColumnCount(0);
+            try (Scanner lector = new Scanner(archivo)) {//Mientras el archivo tenga otra linea
+                String[] datos = new String[10];
+                boolean sw = true;
+                while (lector.hasNext()&& sw==true) {
+                    String Linea = lector.nextLine();
+                    datos = Linea.split(";");
+                    sw=false;
+                }
+                lector.close();
+                int col = datos.length;
+                for (int i = 0; i < col; i++) {
+                    if (i == 0) {
+                        model.addColumn("Key");
+                    } else {
+                        model.addColumn("C." + i);
+                    }
+                }
+                Scanner onishan = new Scanner(archivo);
+                while (onishan.hasNextLine()) {
+                    String Linea = lector.nextLine();//Pedir Linea
+                    datos = Linea.split(";");//Separar los datos
+                    model.addRow(datos);//Agregamos datos a la table
+                }
+            } catch (FileNotFoundException ex) {
+                // TODO enviar mensaje al usuario
+            } catch (NumberFormatException ex) {
+                // TODO enviar mensaje al usuario
+            } catch (Exception ex) {
+                // TODO enviar mensaje al usuario
+            }
+        }
+    }//GEN-LAST:event_btn_archivoActionPerformed
 
     public static String RandomNum(BigInteger tam, BigInteger i, String numbers) {
         while (i.compareTo(tam) < 0) {
@@ -427,6 +495,13 @@ public class Vista extends javax.swing.JFrame {
             i = i.add(BigInteger.ONE);
         }
         return letters;
+    }
+
+    public static int[] RandomPos(int[] random) {
+        for (int i = 0; i < random.length; i++) {
+            random[i] = (int) (Math.random() * 9 + 1);
+        }
+        return random;
     }
 
     /**
@@ -470,8 +545,10 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton Btn_promedio;
     private javax.swing.JButton Btn_search;
     private javax.swing.JButton Btn_sort;
+    private javax.swing.JFileChooser Fc;
     private javax.swing.JTable JTable;
     private javax.swing.JTextField Txt_rp;
+    private javax.swing.JButton btn_archivo;
     private javax.swing.JButton btn_moda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
