@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -33,10 +34,11 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form Vista
      */
-    public static Hashtable<String, ArrayList<String>> directory;
-    public static Vector<BigInteger> vec;
-    public static BigInteger n, m, k;
-    File archivo = new File("Archivo.txt");
+    public static Hashtable<String, ArrayList<String>> directory = new Hashtable<>();
+    public static Vector<String> vec = new Vector<>();
+    public static BigInteger n, m;
+    File archivo = new File("test.txt");
+    File archive;
 
     public Vista() {
         initComponents();
@@ -202,8 +204,6 @@ public class Vista extends javax.swing.JFrame {
             do {
                 m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
             } while (m.compareTo(BigInteger.ZERO) <= 0);
-            directory = new Hashtable<>();
-            vec = new Vector<>();
             String[] rows = new String[m.intValue() + 1];
             int sw;
             String key, cad, camps;
@@ -246,7 +246,7 @@ public class Vista extends javax.swing.JFrame {
                         key = RandomNum(BigInteger.valueOf(10), BigInteger.ZERO, "");
                     } while (directory.containsKey(key)); //Verificar que la clave no se repita
                     rows[0] = key;
-                    vec.add(new BigInteger(key));
+                    vec.add(key);
                     bw.write(key + ";" + camps);
                     bw.newLine();
                     directory.put(key, campos);//Direccionar información
@@ -289,13 +289,14 @@ public class Vista extends javax.swing.JFrame {
                 String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
                 Enumeration<String> llaves = directory.keys();
                 String cad;
-                ArrayList<String> c;
                 boolean sw = true;
-                while (llaves.hasMoreElements() && sw == true) {
+                ArrayList<String> c;
+                while (llaves.hasMoreElements()) {
                     cad = llaves.nextElement();
                     c = directory.get(cad);
                     if (c.get(camp).equals(dat)) {
                         sw = false;
+                        break;
                     }
                 }
                 if (!sw) {
@@ -327,7 +328,7 @@ public class Vista extends javax.swing.JFrame {
         }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
             for (int i = 0; i < vec.size(); i++) {
-                val = vec.get(i).toString();
+                val = vec.get(i);
                 r = directory.get(val);
                 camps = "";
                 for (int j = 0; j < r.size(); j++) {
@@ -349,9 +350,9 @@ public class Vista extends javax.swing.JFrame {
 
     private void Btn_max_minActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_max_minActionPerformed
         Txt_rp.setText("");
-        BigInteger max = BigInteger.ZERO, min = BigInteger.ZERO, data;
+        String max = "", min = "", data;
         int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
-        if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
+        if (camp < m.intValue() && camp >= 0) {
             Enumeration<String> llaves = directory.keys();
             String cad;
             ArrayList<String> c;
@@ -361,11 +362,11 @@ public class Vista extends javax.swing.JFrame {
                 cad = llaves.nextElement();
                 c = directory.get(cad);
                 if (sw == true) {
-                    min = new BigInteger(c.get(camp));
+                    min = c.get(camp);
                     max = min;
                     sw = false;
                 } else {
-                    data = new BigInteger(c.get(camp));
+                    data = c.get(camp);
                     if (data.compareTo(max) > 0) {
                         max = data;
                     }
@@ -386,16 +387,27 @@ public class Vista extends javax.swing.JFrame {
         Txt_rp.setText("");
         int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
         BigInteger sum = BigInteger.ZERO;
-        if (camp < m.intValue() && camp >= 0 && camp % 2 == 0) {
+        if (camp < m.intValue() && camp >= 0) {
             Enumeration<String> llaves = directory.keys();
             String cad;
             ArrayList<String> c;
+            boolean sw = true;
             while (llaves.hasMoreElements()) {
                 cad = llaves.nextElement();
                 c = directory.get(cad);
-                sum = sum.add(new BigInteger(c.get(camp)));
+                if (isNumeric(c.get(camp))) {
+                    sum = sum.add(new BigInteger(c.get(camp)));
+                } else {
+                    sw = false;
+                    break;
+                }
+
             }
-            Txt_rp.setText("El promedio de datos del " + (camp + 1) + " es: " + sum.divide(n));
+            if (sw) {
+                Txt_rp.setText("El promedio de datos del " + (camp + 1) + " es: " + sum.divide(n));
+            } else {
+                JOptionPane.showMessageDialog(null, "El campo no es numerico");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Campo incorrecto");
         }
@@ -442,33 +454,46 @@ public class Vista extends javax.swing.JFrame {
         Fc.setFileFilter(filter);
         int Opcion = Fc.showOpenDialog(this); //Mostrar el FileChooser
         if (Opcion == JFileChooser.APPROVE_OPTION) {//Si el usuario escogió abrir
-            archivo = Fc.getSelectedFile();
+            directory.clear();
+            vec.clear();
+            n = BigInteger.ZERO;
+            archive = Fc.getSelectedFile();
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
             model.setRowCount(0);
             model.setColumnCount(0);
-            try (Scanner lector = new Scanner(archivo)) {//Mientras el archivo tenga otra linea
-                String[] datos = new String[10];
-                boolean sw = true;
-                while (lector.hasNext()&& sw==true) {
-                    String Linea = lector.nextLine();
-                    datos = Linea.split(";");
-                    sw=false;
-                }
-                lector.close();
-                int col = datos.length;
-                for (int i = 0; i < col; i++) {
+            try (Scanner lector = new Scanner(archive)) {//Mientras el archivo tenga otra linea
+                String[] datos;
+                String Linea = lector.nextLine();
+                datos = Linea.split(";");//Obtengo la primera linea del archivo para obtener el numero de campos y crear las columnas
+                m = BigInteger.valueOf(datos.length);
+                for (int i = 0; i < m.intValue(); i++) {
                     if (i == 0) {
                         model.addColumn("Key");
                     } else {
                         model.addColumn("C." + i);
                     }
                 }
-                Scanner onishan = new Scanner(archivo);
-                while (onishan.hasNextLine()) {
-                    String Linea = lector.nextLine();//Pedir Linea
+                m = m.subtract(BigInteger.ONE);
+                ArrayList<String> campos = new ArrayList<>(Arrays.asList(datos));
+                String key = campos.get(0);
+                campos.remove(0);
+                vec.add(key);
+                directory.put(key, campos);
+                n = n.add(BigInteger.ONE);
+                model.addRow(datos);
+                while (lector.hasNext()) {
+                    Linea = lector.nextLine();//Pedir Linea
                     datos = Linea.split(";");//Separar los datos
                     model.addRow(datos);//Agregamos datos a la table
+                    //Hash
+                    campos = new ArrayList<>(Arrays.asList(datos)); //Convertimos el vector en Arraylist
+                    key = campos.get(0); //Obtenemos la llave
+                    campos.remove(0); //Eliminamos la llave del Arraylist de campos
+                    directory.put(key, campos); // La agregarmos al HashTable
+                    vec.add(key);
+                    n = n.add(BigInteger.ONE);
                 }
+
             } catch (FileNotFoundException ex) {
                 // TODO enviar mensaje al usuario
             } catch (NumberFormatException ex) {
@@ -481,7 +506,7 @@ public class Vista extends javax.swing.JFrame {
 
     public static String RandomNum(BigInteger tam, BigInteger i, String numbers) {
         while (i.compareTo(tam) < 0) {
-            String num = "" + ((int) (Math.random() * 9) + 1);
+            String num = "" + (int) (Math.random() * 10);
             numbers += num;
             i = i.add(BigInteger.ONE);
         }
@@ -491,7 +516,7 @@ public class Vista extends javax.swing.JFrame {
 
     public static String RandomLetter(BigInteger tam, BigInteger i, String letters) {
         while (i.compareTo(tam) < 0) {
-            letters += (char) (Math.random() * (91 - 65) + 65);
+            letters += (char) (Math.random() * (123 - 97) + 97);
             i = i.add(BigInteger.ONE);
         }
         return letters;
@@ -499,9 +524,18 @@ public class Vista extends javax.swing.JFrame {
 
     public static int[] RandomPos(int[] random) {
         for (int i = 0; i < random.length; i++) {
-            random[i] = (int) (Math.random() * 9 + 1);
+            random[i] = (int) (Math.random() * 15 + 1);
         }
         return random;
+    }
+
+    public static boolean isNumeric(String cadena) {
+        try {
+            Long.parseLong(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     /**
