@@ -34,8 +34,8 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form Vista
      */
-    public static Hashtable<String, ArrayList<String>> directory = new Hashtable<>();
-    public static Vector<String> vec = new Vector<>();
+    public static Hashtable<String, ArrayList<String>> directory;
+    public static Vector<String> vec;
     public static BigInteger n, m;
     File archivo = new File("test.txt");
     File archive;
@@ -54,12 +54,6 @@ public class Vista extends javax.swing.JFrame {
     private void initComponents() {
 
         Fc = new javax.swing.JFileChooser();
-        jLabel1 = new javax.swing.JLabel();
-        Btn_llenar = new javax.swing.JButton();
-        Btn_sort = new javax.swing.JButton();
-        Btn_search = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         Btn_max_min = new javax.swing.JButton();
         Btn_promedio = new javax.swing.JButton();
         btn_moda = new javax.swing.JButton();
@@ -67,54 +61,52 @@ public class Vista extends javax.swing.JFrame {
         JTable = new javax.swing.JTable();
         Txt_rp = new javax.swing.JTextField();
         btn_archivo = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        Btn_sort = new javax.swing.JButton();
+        Btn_llenar = new javax.swing.JButton();
+        Btn_search = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Llenar Campos: ");
-
-        Btn_llenar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_llenarActionPerformed(evt);
-            }
-        });
-
-        Btn_sort.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_sortActionPerformed(evt);
-            }
-        });
-
-        Btn_search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_searchActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Ordenar : ");
-
-        jLabel3.setText("Buscar:");
-
+        Btn_max_min.setBackground(new java.awt.Color(204, 204, 204));
+        Btn_max_min.setFont(new java.awt.Font("Constantia", 0, 14)); // NOI18N
         Btn_max_min.setText("Max / Min");
+        Btn_max_min.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Btn_max_min.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_max_minActionPerformed(evt);
             }
         });
+        getContentPane().add(Btn_max_min, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 20, 100, 31));
 
+        Btn_promedio.setBackground(new java.awt.Color(204, 204, 204));
+        Btn_promedio.setFont(new java.awt.Font("Constantia", 0, 14)); // NOI18N
         Btn_promedio.setText("Media");
+        Btn_promedio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Btn_promedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_promedioActionPerformed(evt);
             }
         });
+        getContentPane().add(Btn_promedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 20, 100, 31));
 
+        btn_moda.setBackground(new java.awt.Color(204, 204, 204));
+        btn_moda.setFont(new java.awt.Font("Constantia", 0, 14)); // NOI18N
         btn_moda.setText("Moda");
+        btn_moda.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_moda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_modaActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_moda, new org.netbeans.lib.awtextra.AbsoluteConstraints(627, 20, 100, 31));
 
+        JTable.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         JTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -126,74 +118,117 @@ public class Vista extends javax.swing.JFrame {
         JTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(JTable);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 909, 400));
+
+        Txt_rp.setFont(new java.awt.Font("Constantia", 0, 14)); // NOI18N
+        getContentPane().add(Txt_rp, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 80, 580, 40));
+
+        btn_archivo.setBackground(new java.awt.Color(204, 204, 204));
+        btn_archivo.setFont(new java.awt.Font("Constantia", 0, 14)); // NOI18N
         btn_archivo.setText("Cargar Archivo");
+        btn_archivo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_archivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_archivoActionPerformed(evt);
             }
         });
+        getContentPane().add(btn_archivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(771, 20, 140, 31));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Constantia", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Llenar Campos: ");
+
+        jLabel2.setFont(new java.awt.Font("Constantia", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Ordenar : ");
+
+        jLabel3.setFont(new java.awt.Font("Constantia", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Buscar:");
+
+        Btn_sort.setBackground(new java.awt.Color(204, 204, 204));
+        Btn_sort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sort.png"))); // NOI18N
+        Btn_sort.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Btn_sort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_sortActionPerformed(evt);
+            }
+        });
+
+        Btn_llenar.setBackground(new java.awt.Color(204, 204, 204));
+        Btn_llenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/folder.png"))); // NOI18N
+        Btn_llenar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Btn_llenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_llenarActionPerformed(evt);
+            }
+        });
+
+        Btn_search.setBackground(new java.awt.Color(204, 204, 204));
+        Btn_search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loupe.png"))); // NOI18N
+        Btn_search.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_searchActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Btn_sort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)
-                                .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addComponent(btn_archivo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Txt_rp))))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_llenar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                        .addComponent(Btn_llenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Btn_max_min, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Btn_promedio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_moda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_archivo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Txt_rp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                .addContainerGap())
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Btn_llenar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Btn_sort, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 310, 155));
+
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 930, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 583, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -204,6 +239,8 @@ public class Vista extends javax.swing.JFrame {
             do {
                 m = BigInteger.valueOf(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de campos M ")));
             } while (m.compareTo(BigInteger.ZERO) <= 0);
+            directory = new Hashtable<>();
+            vec = new Vector<>();
             String[] rows = new String[m.intValue() + 1];
             int sw;
             String key, cad, camps;
@@ -265,187 +302,232 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_Btn_llenarActionPerformed
 
     private void Btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_searchActionPerformed
-        int seleccion = JOptionPane.showOptionDialog(null, "Buscar por : ",
-                "Select", JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
-                new Object[]{"Llave", "Campo"}, "LLave");
+        try {
+            int seleccion = JOptionPane.showOptionDialog(null, "Buscar por : ",
+                    "Select", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null,// null para icono por defecto.
+                    new Object[]{"Llave", "Campo", "Dato"}, "LLave");
 
-        if (seleccion == 0) {
-            String key = (JOptionPane.showInputDialog("Ingrese la llave: "));
-            if (directory.containsKey(key)) {
-                String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
-                ArrayList<String> r = directory.get(key);
-                if (r.contains(dat)) {
-                    JOptionPane.showMessageDialog(null, "El " + dat + " se encontro");
+            if (seleccion == 0) {
+                String key = (JOptionPane.showInputDialog("Ingrese la llave: "));
+                if (directory.containsKey(key)) {
+                    String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
+                    ArrayList<String> r = directory.get(key);
+                    if (r.contains(dat)) {
+                        JOptionPane.showMessageDialog(null, "El " + dat + " se encontro con la llave " + key);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontro");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se encontro");
+                    JOptionPane.showMessageDialog(null, "Llave incorrecta");
+                }
+            } else if (seleccion == 1) {
+                int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+                if (camp < m.intValue() && camp >= 0) {
+                    String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
+                    Enumeration<String> llaves = directory.keys();
+                    String cad;
+                    boolean sw = true;
+                    ArrayList<String> c;
+                    while (llaves.hasMoreElements()) {
+                        cad = llaves.nextElement();
+                        c = directory.get(cad);
+                        if (c.get(camp).equals(dat)) {
+                            sw = false;
+                            break;
+                        }
+                    }
+                    if (!sw) {
+                        JOptionPane.showMessageDialog(null, "El " + dat + " se encontro en el campo " + camp);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontro");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Campo incorrecto");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Llave incorrecta");
-            }
-        } else {
-            int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
-            if (camp < m.intValue() && camp >= 0) {
+                Enumeration<String> enumeration = directory.keys();
                 String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
-                Enumeration<String> llaves = directory.keys();
-                String cad;
+                int i = 0;
+                int j = 0;
                 boolean sw = true;
-                ArrayList<String> c;
-                while (llaves.hasMoreElements()) {
-                    cad = llaves.nextElement();
-                    c = directory.get(cad);
-                    if (c.get(camp).equals(dat)) {
-                        sw = false;
+                while (enumeration.hasMoreElements()) {
+                    String key = enumeration.nextElement();
+                    ArrayList<String> r = directory.get(key);
+                    while (i < r.size()) {
+                        if (r.get(i).contains(dat)) {
+                            JOptionPane.showMessageDialog(null, "Se encontro el dato: " + dat + " en el campo " + (i + 1) + " registro con llave " + key);
+                            sw = false;
+                            break;
+                        }
+                        i++;
+                    }
+                    i = 0;
+                    if (!sw) {
                         break;
                     }
                 }
-                if (!sw) {
-                    JOptionPane.showMessageDialog(null, "El " + dat + " se encontro");
-                } else {
+                if (sw) {
                     JOptionPane.showMessageDialog(null, "No se encontro");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Campo incorrecto");
             }
+        } catch (Exception e) {
+
         }
+
 
     }//GEN-LAST:event_Btn_searchActionPerformed
 
     private void Btn_sortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_sortActionPerformed
-        Collections.sort(vec);
-        ArrayList<String> r;
-        String[] rows = new String[m.intValue() + 1];
-        String val, camps;
-        DefaultTableModel model = (DefaultTableModel) JTable.getModel();
-        model.setRowCount(0);
-        model.setColumnCount(0);
-        for (int i = 0; i < m.intValue() + 1; i++) {
-            if (i == 0) {
-                model.addColumn("Key");
-            } else {
-                model.addColumn("C." + i);
-            }
-        }
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
-            for (int i = 0; i < vec.size(); i++) {
-                val = vec.get(i);
-                r = directory.get(val);
-                camps = "";
-                for (int j = 0; j < r.size(); j++) {
-                    camps += r.get(j) + "|";
-                    rows[j + 1] = r.get(j);
+        if (!vec.isEmpty()) {
+            Collections.sort(vec);
+            ArrayList<String> r;
+            String[] rows = new String[m.intValue() + 1];
+            String val, camps;
+            DefaultTableModel model = (DefaultTableModel) JTable.getModel();
+            model.setRowCount(0);
+            model.setColumnCount(0);
+            for (int i = 0; i < m.intValue() + 1; i++) {
+                if (i == 0) {
+                    model.addColumn("Key");
+                } else {
+                    model.addColumn("C." + i);
                 }
-                rows[0] = val;
-                bw.write("Llaves: " + val + " " + camps);
-                bw.newLine();
-                model.addRow(rows);
             }
-            JTable.setModel(model);
-            System.out.println("¬Arhivo Ordenado Cargado¬");
-        } catch (IOException ex) {
-            Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo));) {
+                for (int i = 0; i < vec.size(); i++) {
+                    val = vec.get(i);
+                    r = directory.get(val);
+                    camps = "";
+                    for (int j = 0; j < r.size(); j++) {
+                        camps += r.get(j) + "|";
+                        rows[j + 1] = r.get(j);
+                    }
+                    rows[0] = val;
+                    bw.write("Llaves: " + val + " " + camps);
+                    bw.newLine();
+                    model.addRow(rows);
+                }
+                JTable.setModel(model);
+                System.out.println("¬Arhivo Ordenado Cargado¬");
+            } catch (IOException ex) {
+                Logger.getLogger(Vista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
     }//GEN-LAST:event_Btn_sortActionPerformed
 
     private void Btn_max_minActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_max_minActionPerformed
-        Txt_rp.setText("");
-        String max = "", min = "", data;
-        int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
-        if (camp < m.intValue() && camp >= 0) {
-            Enumeration<String> llaves = directory.keys();
-            String cad;
-            ArrayList<String> c;
-            boolean sw = true;
-
-            while (llaves.hasMoreElements()) {
-                cad = llaves.nextElement();
-                c = directory.get(cad);
-                if (sw == true) {
-                    min = c.get(camp);
-                    max = min;
-                    sw = false;
-                } else {
-                    data = c.get(camp);
-                    if (data.compareTo(max) > 0) {
-                        max = data;
-                    }
-                    if (data.compareTo(min) < 0) {
-                        min = data;
+        try {
+            Txt_rp.setText("");
+            String max = "", min = "", data;
+            int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+            if (camp < m.intValue() && camp >= 0) {
+                Enumeration<String> llaves = directory.keys();
+                String cad;
+                ArrayList<String> c;
+                boolean sw = true;
+                while (llaves.hasMoreElements()) {
+                    cad = llaves.nextElement();
+                    c = directory.get(cad);
+                    if (sw == true) {
+                        min = c.get(camp);
+                        max = min;
+                        sw = false;
+                    } else {
+                        data = c.get(camp);
+                        if (data.compareTo(max) > 0) {
+                            max = data;
+                        }
+                        if (data.compareTo(min) < 0) {
+                            min = data;
+                        }
                     }
                 }
+                Txt_rp.setText("El dato mayor y menor del campo " + (camp + 1) + " es: " + max + "/" + min);
 
+            } else {
+                JOptionPane.showMessageDialog(null, "Campo incorrecto");
             }
-            Txt_rp.setText("El dato mayor y menor del campo " + (camp + 1) + " es: " + max + "/" + min);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto");
+        } catch (Exception e) {
         }
+
     }//GEN-LAST:event_Btn_max_minActionPerformed
 
     private void Btn_promedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_promedioActionPerformed
-        Txt_rp.setText("");
-        int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
-        BigInteger sum = BigInteger.ZERO;
-        if (camp < m.intValue() && camp >= 0) {
-            Enumeration<String> llaves = directory.keys();
-            String cad;
-            ArrayList<String> c;
-            boolean sw = true;
-            while (llaves.hasMoreElements()) {
-                cad = llaves.nextElement();
-                c = directory.get(cad);
-                if (isNumeric(c.get(camp))) {
-                    sum = sum.add(new BigInteger(c.get(camp)));
-                } else {
-                    sw = false;
-                    break;
-                }
+        try {
+            Txt_rp.setText("");
+            int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+            BigInteger sum = BigInteger.ZERO;
+            if (camp < m.intValue() && camp >= 0) {
+                Enumeration<String> llaves = directory.keys();
+                String cad;
+                ArrayList<String> c;
+                boolean sw = true;
+                while (llaves.hasMoreElements()) {
+                    cad = llaves.nextElement();
+                    c = directory.get(cad);
+                    if (isNumeric(c.get(camp))) {
+                        sum = sum.add(new BigInteger(c.get(camp)));
+                    } else {
+                        sw = false;
+                        break;
+                    }
 
-            }
-            if (sw) {
-                Txt_rp.setText("El promedio de datos del " + (camp + 1) + " es: " + sum.divide(n));
+                }
+                if (sw) {
+                    Txt_rp.setText("El promedio de datos del campo " + (camp + 1) + " es: " + sum.divide(n));
+                } else {
+                    JOptionPane.showMessageDialog(null, "El campo no es numerico");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "El campo no es numerico");
+                JOptionPane.showMessageDialog(null, "Campo incorrecto");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto");
+
+        } catch (Exception e) {
         }
+
+
     }//GEN-LAST:event_Btn_promedioActionPerformed
 
     private void btn_modaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modaActionPerformed
-        Txt_rp.setText("");
-        int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
-        if (camp < m.intValue() && camp >= 0) {
-            Enumeration<String> llaves = directory.keys();
-            String cad;
-            ArrayList<String> c;
-            ArrayList<String> r = new ArrayList<>();
-            int cont = 0, dis = 0;
-            String me = "0";
-            while (llaves.hasMoreElements()) {
-                cad = llaves.nextElement();
-                c = directory.get(cad);
-                r.add(c.get(camp));
-            }
-            Collections.sort(r);//Campos ordenados
-            for (int i = 0; i < r.size() - 1; i++) {//Moda : Se compara la distancia de los datos consecutivos 
-                if (r.get(i).compareTo(r.get(i + 1)) == 0) {
-                    cont++;
-                    if (cont > dis) {
-                        me = r.get(i) + "";
-                        dis = cont;
-                    } else if (cont == dis) {
-                        me += "," + r.get(i);
-                    }
-                } else {
-                    cont = 0;
+        try {
+            Txt_rp.setText("");
+            int camp = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el campo: ")) - 1;
+            if (camp < m.intValue() && camp >= 0) {
+                Enumeration<String> llaves = directory.keys();
+                String cad;
+                ArrayList<String> c;
+                ArrayList<String> r = new ArrayList<>();
+                int cont = 0, dis = 0;
+                String me = "0";
+                while (llaves.hasMoreElements()) {
+                    cad = llaves.nextElement();
+                    c = directory.get(cad);
+                    r.add(c.get(camp));
                 }
+                Collections.sort(r);//Campos ordenados
+                for (int i = 0; i < r.size() - 1; i++) {//Moda : Se compara la distancia de los datos consecutivos 
+                    if (r.get(i).compareTo(r.get(i + 1)) == 0) {
+                        cont++;
+                        if (cont > dis) {
+                            me = r.get(i) + "";
+                            dis = cont;
+                        } else if (cont == dis) {
+                            me = r.get(i);
+                        }
+                    } else {
+                        cont = 0;
+                    }
+                }
+                Txt_rp.setText("La moda en el campo " + (camp + 1) + " es: " + me);
+            } else {
+                JOptionPane.showMessageDialog(null, "Campo incorrecto");
             }
-            Txt_rp.setText("La moda en el campo " + (camp + 1) + " es: " + me);
-        } else {
-            JOptionPane.showMessageDialog(null, "Campo incorrecto");
+        } catch (Exception e) {
         }
+
     }//GEN-LAST:event_btn_modaActionPerformed
 
     private void btn_archivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_archivoActionPerformed
@@ -454,8 +536,8 @@ public class Vista extends javax.swing.JFrame {
         Fc.setFileFilter(filter);
         int Opcion = Fc.showOpenDialog(this); //Mostrar el FileChooser
         if (Opcion == JFileChooser.APPROVE_OPTION) {//Si el usuario escogió abrir
-            directory.clear();
-            vec.clear();
+            directory = new Hashtable<>();
+            vec = new Vector<>();
             n = BigInteger.ZERO;
             archive = Fc.getSelectedFile();
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
@@ -493,7 +575,7 @@ public class Vista extends javax.swing.JFrame {
                     vec.add(key);
                     n = n.add(BigInteger.ONE);
                 }
-
+                //System.out.println(vec.size());
             } catch (FileNotFoundException ex) {
                 // TODO enviar mensaje al usuario
             } catch (NumberFormatException ex) {
@@ -502,6 +584,7 @@ public class Vista extends javax.swing.JFrame {
                 // TODO enviar mensaje al usuario
             }
         }
+
     }//GEN-LAST:event_btn_archivoActionPerformed
 
     public static String RandomNum(BigInteger tam, BigInteger i, String numbers) {
@@ -587,6 +670,8 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,8 @@ public class Laboratorio_1 {
     public static void main(String[] args) {
         Vista m = new Vista();
         m.setVisible(true);
-        m.setResizable(false);
+       // m.setResizable(false);
+        m.setLocationRelativeTo(null);
         m.setTitle("Vista");
         
     }
