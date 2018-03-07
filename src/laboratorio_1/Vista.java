@@ -346,27 +346,27 @@ public class Vista extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Campo incorrecto");
                 }
             } else {
-                Enumeration<String> enumeration = directory.keys();
-                String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
                 int i = 0;
                 int j = 0;
+                String cad = "";
                 boolean sw = true;
-                while (enumeration.hasMoreElements()) {
-                    String key = enumeration.nextElement();
-                    ArrayList<String> r = directory.get(key);
-                    while (i < r.size()) {
-                        if (r.get(i).contains(dat)) {
-                            JOptionPane.showMessageDialog(null, "Se encontro el dato: " + dat + " en el campo " + (i + 1) + " registro con llave " + key);
-                            sw = false;
-                            break;
+                if (!vec.isEmpty()) {
+                    String dat = (JOptionPane.showInputDialog("Ingrese el dato: "));
+                    while (j < vec.size()) {
+                        ArrayList<String> r = directory.get(vec.get(j));
+                        while (i < r.size()) {
+                            if (r.get(i).contains(dat)) {
+                                JOptionPane.showMessageDialog(null, "Se encontro el dato: " + dat + " en el campo " + (i + 1) + " registro " + (j + 1) + " en la cadena " + r.get(i));
+                                cad += "C: " + (i + 1) + "R: " + (j + 1) + "|" + r.get(i);
+                                sw = false;
+                            }
+                            i++;
                         }
-                        i++;
-                    }
-                    i = 0;
-                    if (!sw) {
-                        break;
+                        j++;
+                        i = 0;
                     }
                 }
+                System.out.println(cad);
                 if (sw) {
                     JOptionPane.showMessageDialog(null, "No se encontro");
                 }
